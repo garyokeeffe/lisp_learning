@@ -32,7 +32,7 @@
 ;               (and (not (null x))
 ;                    (or (null (car x))
 ;                       (enigma (cdr x))))
-; enigma is a recursive function that checks whether a non-empty list contains at least one nil element.
+;   enigma is a recursive function that checks whether a non-empty list contains at least one nil element.
 ;
 ;       (b) (defun mystery (x y)
 ;               (if (null y))
@@ -41,9 +41,60 @@
 ;                       0
 ;                       (let ((z (mystery x (cdr y))))
 ;                           (and z (+ z 1))))))
-; mystery finds the first index of x in y (if it exists)
+;   mystery finds the first index of x in y (if it exists)
+;
+; 6. What could occur in place of the x in each of the following exchanges?
+;       (a) > (car (x (cdr '(a (b c) d))))
+;           B
+;       car
+;       (b) > (x 13 (/ 1 0))
+;            13
+;       (/ 1 0) returns in an error. This makes it tricky. I couldn't get an exact 
+;       replacement for x that would not break due to the division by 0. Tried lambdas and ignore-errors
+;       UPDATE: Looked up the answer --- it's "or"
+;       (c) > (x #'list 1 nil)
+;           (1)
+;       apply
+;
+; 7. Using only operations introduced in this chapter, define a function that takes a list as an 
+;   argurment and returns true if one of its elements is a list.
+;   
+;   (defun list-has-list (input)
+;       (if (null input)
+;           nil
+;           (if (listp (car input))
+;               t
+;               (list-has-list (cdr input)))))
+;
+; 8. Give iterative and recursive definitions of a function that
+;   (a) takes a positive integer and prints that many dots
+;
+;   (defun print-dots (input)
+;       (do ((i 0 (1+ i)))              
+;           ((>= i input) nil)         
+;           (format t ".")))
+;
+;   defun rint-dots (input)    
+;       (if (plusp input)
+;           (progn
+;               (format t ".")
+;               (ndots-rec (- input 1)))))
+;
+;   (b) takes a list and returns the number of times the symbol a appears in it
+;
+;     (defun a-rep (ls)
+;       (do ((ls1 ls (cdr ls1))
+;           (n 0 (+ n (if (eq (car ls1) 'a) 1 0))))
+;          ((not ls1) n)))
+;
+;     (defun a-rec (ls) 
+;       (if ls
+;          (+ (if (eq (car ls) 'a) 1 0) (a-rec (cdr ls)))
+;           0))
+; 9. 
+;    (a) the apply function isn't applied to the nil-less list
+;    (b) lacks an explicit base case for when the entire list has been processed
 ;
 ;
-;
-;
+
 
